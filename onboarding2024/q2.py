@@ -16,8 +16,10 @@ class LinearRegression(nn.Module):
         self.linear = nn.Linear(input_dim, output_dim)
 
     def forward(self, x):
-        # TODO: Implement
-        raise NotImplementedError
+        x = self.fc1(x)
+        x = self.relu(x)
+        x = self.fc2(x)
+        return x
 
 def create_loss_and_optimizer(model):
     """Create and return a loss function and optimizer.
@@ -32,8 +34,7 @@ def create_loss_and_optimizer(model):
         optimizer (torch.optim.Optimizer)
             The optimizer for the model
     """
-    # TODO: Implement
-    raise NotImplementedError
+    return torch.nn.MSELoss, nn.optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
 
 def train(x, y, model, loss_fn, optimizer, checkpoint_path, num_epochs=1000):
     """Train a model.

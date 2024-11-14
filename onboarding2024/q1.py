@@ -17,8 +17,7 @@ def calculate_distances(x, y):
     # TODO: Debug
     diff = x - y
     squared = diff ** 2
-    summed = np.sum(squared)
-    distances = np.sqrt(summed)
+    distances = np.rot90(np.array([[(np.sum(i))**0.5 for i in squared]]))
     return distances
 
 def combine_squares(square_1, square_2, square_3, square_4):
@@ -48,9 +47,11 @@ def combine_squares(square_1, square_2, square_3, square_4):
             A tensor with shape (2n, 2n)
     """
     # TODO: Debug
-    top = torch.cat((square_1, square_2))
-    bottom = torch.cat((square_3, square_4))
-    combined_square = torch.cat((top, bottom))
+    top = torch.cat((square_1, square_3))
+    bottom = torch.cat((square_2, square_4))
+    print("dim 1")
+    combined_square = torch.cat((top, bottom), dim=1)
+    print(combined_square)
     return combined_square
 
 def video_to_filmstrip(video_frames):
@@ -69,5 +70,7 @@ def video_to_filmstrip(video_frames):
         filmstrip (torch.Tensor)
             A tensor with shape (h, w * n_frames, c)
     """
+    tensors = tuple([torch.tensor(i) for i in video_frames])
+    return torch.cat(tensors)
     # TODO: Implement
     raise NotImplementedError
